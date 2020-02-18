@@ -11,10 +11,10 @@ import (
 )
 
 func main() {
-	fmt.Println("||           Starting Star Wars Catalog         || ")
-	fmt.Println("Fetching data")
+	fmt.Printf("||           Starting Star Wars Catalog         || ")
+	fmt.Printf("Fetching data")
 	service.DownloadData()
-	fmt.Println("Data retrieved succesfully!")
+	fmt.Printf("Data retrieved succesfully!")
 	time.Sleep(1 * time.Second)
 	var characters []string = service.GetListCharacter()
 	var films []string = service.GetListFilms()
@@ -25,7 +25,6 @@ func main() {
 	var exist = false
 
 	for exist == false {
-
 		prompt := promptui.Select{
 			Label: "What are you searching for?",
 			Items: []string{"Planet", "Character", "Film", "Vehicle", "Starship",
@@ -57,7 +56,7 @@ func main() {
 
 			planet := service.FindPlanetByName(result)
 			prettyJSON, _ := json.MarshalIndent(planet, "", "\t")
-			fmt.Println(string(prettyJSON))
+			fmt.Printf(string(prettyJSON))
 
 		case "Character":
 
@@ -76,7 +75,7 @@ func main() {
 
 			character := service.FindCharacterByName(result)
 			prettyJSON, _ := json.MarshalIndent(character, "", "\t")
-			fmt.Println(string(prettyJSON))
+			fmt.Printf(string(prettyJSON))
 
 		case "Film":
 			prompt := promptui.Select{
@@ -94,7 +93,7 @@ func main() {
 
 			film := service.FindFilmBytitle(result)
 			prettyJSON, _ := json.MarshalIndent(film, "", "\t")
-			fmt.Println(string(prettyJSON))
+			fmt.Printf(string(prettyJSON))
 
 		case "Species":
 			prompt := promptui.Select{
@@ -112,7 +111,7 @@ func main() {
 
 			specie := service.FindSpeciesByName(result)
 			prettyJSON, _ := json.MarshalIndent(specie, "", "\t")
-			fmt.Println(string(prettyJSON))
+			fmt.Printf(string(prettyJSON))
 
 		case "Starship":
 
@@ -131,7 +130,7 @@ func main() {
 
 			starship := service.FindStarshipByName(result)
 			prettyJSON, _ := json.MarshalIndent(starship, "", "\t")
-			fmt.Println(string(prettyJSON))
+			fmt.Printf(string(prettyJSON))
 
 		case "Vehicle":
 
@@ -150,12 +149,12 @@ func main() {
 
 			vehicle := service.FindVehicleByName(result)
 			prettyJSON, _ := json.MarshalIndent(vehicle, "", "\t")
-			fmt.Println(string(prettyJSON))
+			fmt.Printf(string(prettyJSON))
 		case "-----Exit-----":
-			fmt.Println("||   May the Force be with you   ||")
+			fmt.Printf("||   May the Force be with you   ||")
 			exist = true
 		default:
-			fmt.Println("Too far away.")
+			fmt.Printf("Too far away.")
 			exist = true
 		}
 		time.Sleep(2 * time.Second)
@@ -169,7 +168,7 @@ func main() {
 			result2, err2 := prompt2.Run()
 
 			if err2 != nil {
-				fmt.Println("||   May the Force be with you   ||")
+				fmt.Printf("||   May the Force be with you   ||")
 				return
 			}
 
@@ -180,85 +179,3 @@ func main() {
 	}
 
 }
-
-/*import (
-	"encoding/json"
-	"flag"
-	"fmt"
-	"strconv"
-
-	"github.com/AlejandroLayos/startingGo/src/service"
-
-
-func main() {
-	//This flag is used to detect the type of the object to search
-	typePtr := flag.String("type", "", "type --> planet, character, species, starship, vehicles (string), episode (number)")
-	flag.Parse()
-
-	var nameToFind string
-	//For used to build the name from the array
-	for index, element := range flag.Args() {
-		if index == 0 {
-			nameToFind = element
-		} else {
-			nameToFind = nameToFind + " " + element
-		}
-	}
-	switch *typePtr {
-	case "planet":
-		planet := service.GetPlanet(nameToFind)
-		if planet.Name == "" {
-			fmt.Println("The planet does not exist in our database")
-		} else {
-			prettyJSON, _ := json.MarshalIndent(planet, "", "\t")
-			fmt.Println(string(prettyJSON))
-		}
-	case "character":
-		character := service.GetCharacter(nameToFind)
-		if character.Name == "" {
-			fmt.Println("The character does not exist in our database")
-
-		} else {
-			prettyJSON, _ := json.MarshalIndent(character, "", "\t")
-			fmt.Println(string(prettyJSON))
-		}
-	case "episode":
-		episode, _ := strconv.Atoi(nameToFind)
-		film := service.GetFilm(episode)
-		if film.Title == "" {
-			fmt.Println("The film does not exist in our database")
-		} else {
-			prettyJSON, _ := json.MarshalIndent(film, "", "\t")
-			fmt.Println(string(prettyJSON))
-		}
-	case "species":
-		species := service.GetSpecies(nameToFind)
-		if species.Name == "" {
-			fmt.Println("The species does not exist in our database")
-		} else {
-			prettyJSON, _ := json.MarshalIndent(species, "", "\t")
-			fmt.Println(string(prettyJSON))
-		}
-	case "starship":
-		starship := service.GetStarship(nameToFind)
-		if starship.Name == "" {
-			fmt.Println("The starship does not exist in our database")
-		} else {
-			prettyJSON, _ := json.MarshalIndent(starship, "", "\t")
-			fmt.Println(string(prettyJSON))
-		}
-	case "vehicles":
-		vehicle := service.GetVehicle(nameToFind)
-		if vehicle.Name == "" {
-			fmt.Println("The vechicle does not exist in our database")
-		} else {
-			prettyJSON, _ := json.MarshalIndent(vehicle, "", "\t")
-			fmt.Println(string(prettyJSON))
-		}
-
-	default:
-		fmt.Println("Too far away.")
-	}
-
-}
-*/
